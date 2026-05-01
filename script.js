@@ -552,13 +552,14 @@ function renderTextTag(label, value) {
 function renderMonthlyCalendar(campaigns) {
   const monthStart = startOfMonth(state.calendarDate);
   const monthEnd = endOfMonth(monthStart);
-  const firstGridDate = addDays(monthStart, -monthStart.getDay());
+  const daysFromMonday = (monthStart.getDay() + 6) % 7;
+  const firstGridDate = addDays(monthStart, -daysFromMonday);
   const weeks = Array.from({ length: 6 }, (_, index) => addDays(firstGridDate, index * 7));
   const datedCampaigns = campaigns.filter((campaign) => !isUnscheduledCampaign(campaign) && (campaign.startDate || campaign.endDate));
 
   els.calendarLabel.textContent = `${monthStart.getFullYear()}年${monthStart.getMonth() + 1}月`;
   els.monthlyCalendar.innerHTML = `
-    ${["日", "月", "火", "水", "木", "金", "土"].map((day) => `<div class="calendar-weekday">${day}</div>`).join("")}
+    ${["月", "火", "水", "木", "金", "土", "日"].map((day) => `<div class="calendar-weekday">${day}</div>`).join("")}
     ${weeks.map((weekStart) => renderCalendarWeek(weekStart, monthStart, datedCampaigns)).join("")}
   `;
 
