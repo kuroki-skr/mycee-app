@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --bg: #ffffff;
+  --bg: #fff9df;
   --surface: #ffffff;
   --ink: #222326;
   --muted: #73777f;
@@ -12,8 +12,8 @@
   --green: #4fae7b;
   --mint: #78c9a2;
   --sky: #79aee8;
-  --shadow: 0 14px 34px rgba(30, 32, 36, 0.07);
-  --radius: 8px;
+  --shadow: 0 10px 24px rgba(30, 32, 36, 0.055);
+  --radius: 5px;
   font-family:
     "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Noto Serif JP",
     "Times New Roman", serif;
@@ -63,6 +63,11 @@ button {
   padding: 14px 0 18px;
 }
 
+.topbar-actions {
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
 .topbar h1,
 h2,
 p {
@@ -70,14 +75,14 @@ p {
 }
 
 .topbar h1 {
-  font-size: clamp(30px, 4.2vw, 48px);
+  font-size: clamp(28px, 3.6vw, 44px);
   line-height: 1;
   font-weight: 700;
 }
 
 .eyebrow {
   color: var(--orange);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -89,8 +94,9 @@ p {
 .danger-button {
   border: 1px solid transparent;
   border-radius: var(--radius);
-  min-height: 40px;
+  min-height: 34px;
   font-weight: 700;
+  font-size: 13px;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -98,24 +104,25 @@ p {
 }
 
 .primary-button {
-  background: var(--ink);
-  color: white;
-  padding: 0 16px;
+  background: white;
+  border-color: var(--line);
+  color: var(--ink);
+  padding: 0 13px;
 }
 
 .secondary-button {
   background: white;
   border-color: var(--line);
   color: var(--ink);
-  padding: 0 14px;
+  padding: 0 12px;
 }
 
 .icon-button {
-  width: 40px;
+  width: 34px;
   background: white;
   border-color: var(--line);
   color: var(--ink);
-  font-size: 21px;
+  font-size: 18px;
   line-height: 1;
 }
 
@@ -123,7 +130,7 @@ p {
   background: #fff6f4;
   border-color: rgba(222, 107, 103, 0.38);
   color: #bb403b;
-  padding: 0 16px;
+  padding: 0 13px;
 }
 
 .primary-button:hover,
@@ -142,13 +149,14 @@ p {
   align-items: end;
   justify-content: space-between;
   gap: 14px;
-  margin: 18px 0 12px;
+  margin: 16px 0 10px;
 }
 
 .section-heading h2 {
-  font-size: clamp(24px, 3.2vw, 34px);
+  font-size: clamp(22px, 2.6vw, 30px);
   line-height: 1.1;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .spotlight-section,
@@ -190,7 +198,7 @@ p {
 }
 
 .campaign-card {
-  min-height: 128px;
+  min-height: 118px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -206,11 +214,11 @@ p {
 }
 
 .product-band {
-  min-height: 36px;
+  min-height: 34px;
   display: flex;
   align-items: center;
-  padding: 8px 14px;
-  background: var(--product-color, var(--lemon));
+  padding: 7px 14px;
+  background: var(--product-bg, var(--product-color, var(--lemon)));
   box-shadow:
     inset 0 -1px 0 rgba(32, 33, 36, 0.12),
     inset 0 0 0 1px rgba(32, 33, 36, 0.08);
@@ -220,7 +228,7 @@ p {
 }
 
 .campaign-card-body {
-  padding: 14px;
+  padding: 13px 14px 8px;
 }
 
 .campaign-title-row {
@@ -235,7 +243,7 @@ p {
 .idea-card strong,
 .todo-card strong {
   margin: 0;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.35;
   font-weight: 700;
 }
@@ -259,13 +267,13 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 27px;
+  min-height: 24px;
   border: 1px solid var(--line);
-  border-radius: 99px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.78);
-  padding: 4px 10px;
+  padding: 3px 9px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -281,20 +289,21 @@ p {
 .campaign-side {
   grid-column: 2;
   display: grid;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 0;
+  padding: 0 14px 13px;
 }
 
 .date-range {
   color: var(--ink);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .progress-track {
   width: 100%;
-  height: 7px;
-  border-radius: 99px;
+  height: 5px;
+  border-radius: 999px;
   background: #eee9df;
   overflow: hidden;
 }
@@ -393,7 +402,7 @@ p {
   height: 19px;
   margin: 0 3px;
   border-radius: 4px;
-  background: var(--event-color, var(--lemon));
+  background: var(--event-bg, var(--event-color, var(--lemon)));
   padding: 2px 7px;
   color: var(--ink);
   font-size: 11px;
@@ -444,10 +453,11 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-top: 4px solid var(--product-color, var(--lemon));
 }
 
 .todo-card {
-  border-top: 4px solid var(--lemon);
+  border-top-color: var(--product-color, var(--lemon));
 }
 
 .idea-footer {
@@ -611,12 +621,14 @@ p {
   }
 
   .topbar {
-    align-items: flex-start;
+    align-items: stretch;
     flex-direction: column;
   }
 
   .topbar-actions {
+    width: 100%;
     flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .spotlight-grid,
@@ -628,7 +640,25 @@ p {
 
   .calendar-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-end;
+  }
+
+  .calendar-section .section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .calendar-section .section-heading h2 {
+    white-space: nowrap;
+  }
+
+  .monthly-calendar {
+    min-width: 760px;
+  }
+
+  .calendar-section {
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
 
   .calendar-week {
