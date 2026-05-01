@@ -10,7 +10,7 @@ const LOCAL_IDEAS_KEY = "mycee-app-ideas-v1";
 const LOCAL_TODOS_KEY = "mycee-app-todos-v1";
 
 const productCatalog = [
-  { name: "ブランド全体", color: "#ffffff" },
+  { name: "ブランド全体", color: "#f4d44d", background: "linear-gradient(90deg, #ffe66d, #ff9a4f, #ff6f91, #9b7cff, #68d8ff, #78c9a2)" },
   { name: "マイシーブランド", color: "#f4d44d" },
   { name: "スキニティブランド", color: "#78c9a2" },
   { name: "マイシー", color: "#ffd84d" },
@@ -513,7 +513,7 @@ function renderCampaignCard(campaign, tone = "active") {
   const product = getProduct(campaign.product);
   const progress = getDateProgress(campaign);
   return `
-    <article class="campaign-card is-${tone}" data-detail-type="cp" data-detail-id="${escapeHtml(campaign.id)}" style="--product-color: ${product.color}">
+    <article class="campaign-card is-${tone}" data-detail-type="cp" data-detail-id="${escapeHtml(campaign.id)}" style="--product-color: ${product.color}; --product-bg: ${getProductBackground(product)}">
       <div class="product-band">${escapeHtml(campaign.product || "その他")}</div>
       <div class="campaign-card-body">
         <div class="campaign-title-row">
@@ -521,10 +521,9 @@ function renderCampaignCard(campaign, tone = "active") {
         </div>
         <div class="campaign-meta">
           ${renderTextTag("担当", campaign.owner)}
-          ${renderTextTag("チャネル", campaign.channel)}
+          ${renderTextTag("", campaign.channel)}
           ${renderUrlTag(campaign.cpUrl, "CP URL")}
           ${renderUrlTag(campaign.otherUrl, "その他URL")}
-          ${campaign.syncStatus ? `<span class="tag">${escapeHtml(getSyncLabel(campaign))}</span>` : ""}
           ${campaign.needs ? `<span class="tag">確認 ${escapeHtml(campaign.needs)}</span>` : ""}
         </div>
       </div>
@@ -598,7 +597,7 @@ function renderCalendarWeek(weekStart, monthStart, campaigns) {
               class="calendar-event is-${statusType}"
               data-detail-type="cp"
               data-detail-id="${escapeHtml(segment.campaign.id)}"
-              style="--calendar-column: ${segment.columnStart}; --calendar-span: ${segment.columnSpan}; --calendar-row: ${segment.lane + 2}; --event-color: ${product.color}"
+              style="--calendar-column: ${segment.columnStart}; --calendar-span: ${segment.columnSpan}; --calendar-row: ${segment.lane + 2}; --event-color: ${product.color}; --event-bg: ${getProductBackground(product)}"
               title="${escapeHtml(`${segment.campaign.name || ""}｜${formatDateRange(segment.campaign)}`)}"
             >
               ${escapeHtml(segment.campaign.name || "")}
@@ -666,7 +665,7 @@ function renderIdeas() {
   els.ideaGrid.innerHTML = renderLimitedItems(state.ideas, "ideas", (idea) => {
     const product = getProduct(idea.product);
     return `
-      <article class="idea-card" data-detail-type="idea" data-detail-id="${escapeHtml(idea.id)}" style="border-top: 4px solid ${product.color}">
+      <article class="idea-card" data-detail-type="idea" data-detail-id="${escapeHtml(idea.id)}" style="--product-color: ${product.color}; --product-bg: ${getProductBackground(product)}">
         <div>
           <strong>${escapeHtml(idea.title || "")}</strong>
         </div>
@@ -675,9 +674,6 @@ function renderIdeas() {
             ${renderTextTag("", idea.product)}
             ${renderTextTag("記入者", idea.writer)}
             ${renderUrlTag(idea.url, "URL")}
-          </div>
-          <div class="idea-footer">
-            <span class="tag">${escapeHtml(getIdeaSyncLabel(idea))}</span>
           </div>
         </div>
       </article>
@@ -697,7 +693,7 @@ function renderTodos() {
     (todo) => {
       const product = getProduct(todo.product);
       return `
-      <article class="todo-card" data-detail-type="todo" data-detail-id="${escapeHtml(todo.id)}" style="border-top: 4px solid ${product.color}">
+      <article class="todo-card" data-detail-type="todo" data-detail-id="${escapeHtml(todo.id)}" style="--product-color: ${product.color}; --product-bg: ${getProductBackground(product)}">
         <div>
           <strong>${escapeHtml(todo.title || "")}</strong>
         </div>
@@ -705,9 +701,6 @@ function renderTodos() {
           <div class="campaign-meta">
             ${renderTextTag("", todo.product)}
             ${renderTextTag("記入者", todo.writer)}
-          </div>
-          <div class="idea-footer">
-            <span class="tag">${escapeHtml(getSyncLabel(todo))}</span>
           </div>
         </div>
       </article>
@@ -1422,6 +1415,10 @@ function setConnection(type, message) {
 
 function getProduct(productName) {
   return productCatalog.find((product) => product.name === productName) || productCatalog.at(-1);
+}
+
+function getProductBackground(product) {
+  return product.background || product.color;
 }
 
 function countBy(items, key) {
